@@ -17,9 +17,7 @@ class AX25Frame:
         for i in range(0, len(broadcast) - 8):
             #print(broadcast[i: i + 8])
             if self.is_flag(broadcast[i: i + 8]):
-                return o
-            else:
-                print("blah blah")
+                return i
         return -1
 
     def get_all_flags_indecies(self, broadcast):
