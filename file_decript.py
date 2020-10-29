@@ -31,14 +31,26 @@ def bits2spaced_hex(broadcast):
 def HexDigit2str(hex_digit):
     return str(hex_digit)[-1]
 
+def make_realtime_bits(grc_output):
+    res = ''
+
+    for i in range(0, len(grc_output) - 2*22, 22):
+        res += grc_output[i]
+
+    return res
+
 def good_frames(file_name = 'msgsinktest1.txt', count = 1024):
 
     f = open(file_name, 'r')
     ax = ax25()
     
-    raw_capture = f.read(count)
+    grc_output = f.read(count)
+    print(capture2bits(grc_output)[-3400:-3038])
+    print()
+    print(capture2bits(grc_output)[:400])
+    raw_capture = make_realtime_bits(grc_output[:-3038])
     raw_bits = capture2bits(raw_capture)
-    
+    #print(raw_bits)
     flags = ax.get_all_flags_indecies(raw_bits)
 
     frames_indecies = []
@@ -47,7 +59,7 @@ def good_frames(file_name = 'msgsinktest1.txt', count = 1024):
         frame_len = flags[i + 1] - flags[i]
         if frame_len % 4 == 0 and frame_len < 400:
             frames_indecies.append( (flags[i], flags[i + 1]) )
-##    print(flags)
+    print(flags)
 
 ##    b_start = 462360 #flags[1]
 ##    b_stop =  462608 #flags[2]
