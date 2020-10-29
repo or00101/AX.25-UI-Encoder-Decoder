@@ -11,10 +11,11 @@ class AX25Frame:
         pass
 
     def is_flag(self, string):
-        return string == '01111110'
+##        return string == '01111110'
+        return string == '10000010' #82 in Hex
 
     def get_flag_index(self, broadcast):
-        for i in range(0, len(broadcast) - 8):
+        for i in range(len(broadcast) - 8):
             #print(broadcast[i: i + 8])
             if self.is_flag(broadcast[i: i + 8]):
                 return i
@@ -23,7 +24,7 @@ class AX25Frame:
     def get_all_flags_indecies(self, broadcast):
         i_lst = []
 
-        for i in range(0, len(broadcast) - 8):
+        for i in range(len(broadcast) - 8):
             #print(broadcast[i: i + 8])
             if self.is_flag(broadcast[i: i + 8]):
                 i_lst.append(i)
